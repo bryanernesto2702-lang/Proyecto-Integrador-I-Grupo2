@@ -1,14 +1,41 @@
 package pe.edu.utp;
 
-import pe.edu.utp.controller.ProductoController;
+import pe.edu.utp.model.Almacen;
+import pe.edu.utp.model.Inventario;
+import pe.edu.utp.model.Producto;
 
 public class MainMultitop {
 
     public static void main(String[] args) {
 
-        ProductoController controller =
-                new ProductoController();
+        Producto producto =
+                new Producto(
+                        "CAR-122",
+                        "Tela Velvet Azul",
+                        "Tapicería"
+                );
 
-        controller.crearProducto();
+        Almacen almacen =
+                new Almacen(
+                        1,
+                        "Lima Centro",
+                        "Av. Principal 123"
+                );
+
+        Inventario inventario =
+                new Inventario(
+                        producto,
+                        almacen,
+                        50
+                );
+
+        System.out.println("Producto: "
+                + inventario.getProducto().getNombre());
+
+        System.out.println("Almacén: "
+                + inventario.getAlmacen().getNombreSede());
+
+        System.out.println("Stock: "
+                + inventario.getStock());
     }
 }
