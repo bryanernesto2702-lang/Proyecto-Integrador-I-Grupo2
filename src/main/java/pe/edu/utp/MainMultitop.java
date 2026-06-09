@@ -37,5 +37,11 @@ public class MainMultitop {
 
         System.out.println("Stock: "
                 + inventario.getStock());
+
+        // Actualizar stock
+        inventario.actualizarStock(20);
+
+        System.out.println("Nuevo stock: "
+                + inventario.getStock());
     }
 }
