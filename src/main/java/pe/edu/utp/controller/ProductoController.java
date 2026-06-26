@@ -12,15 +12,4 @@ public class ProductoController {
                     new ProductoDAOImpl()
             );
 
-    public void crearProducto() {
-
-        Producto producto =
-                new Producto(
-                        "CAR-122",
-                        "Tela Velvet Azul",
-                        "Tapicería"
-                );
-
-        service.registrarProducto(producto);
-    }
 }
