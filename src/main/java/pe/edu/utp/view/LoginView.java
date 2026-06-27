@@ -56,7 +56,6 @@ public class LoginView extends JFrame {
 
         add(panel);
 
-        // Acción del botón Iniciar Sesión
         btnIngresar.addActionListener(new ActionListener() {
 
             @Override
@@ -76,11 +75,10 @@ public class LoginView extends JFrame {
                             "Bienvenido " + u.getNombre()
                     );
 
-                    // Cierra la ventana del Login
                     dispose();
 
-                    // Abre el Dashboard
-                    DashboardView dashboard = new DashboardView();
+                    // Se envía el usuario al Dashboard
+                    DashboardView dashboard = new DashboardView(u);
                     dashboard.setVisible(true);
 
                 } else {
@@ -93,6 +91,7 @@ public class LoginView extends JFrame {
                 }
 
             }
+
         });
 
     }
@@ -108,4 +107,5 @@ public class LoginView extends JFrame {
     public JButton getBtnIngresar() {
         return btnIngresar;
     }
+
 }

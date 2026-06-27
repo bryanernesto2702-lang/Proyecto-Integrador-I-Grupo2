@@ -6,11 +6,15 @@ import pe.edu.utp.model.Producto;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 public class ProductoView extends JFrame {
 
     private JTable tabla;
     private DefaultTableModel modelo;
+
+    private JTextField txtBuscar;
 
     public ProductoView() {
 
@@ -20,12 +24,43 @@ public class ProductoView extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         JPanel panel = new JPanel(new BorderLayout());
+        JPanel panelSuperior = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
-        JLabel titulo = new JLabel("GESTIÓN DE PRODUCTOS");
+        panelSuperior.add(new JLabel("🔍 Buscar:"));
+
+        txtBuscar = new JTextField(30);
+
+        panelSuperior.add(txtBuscar);
+
+        txtBuscar.getDocument().addDocumentListener(new DocumentListener() {
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                buscarProductos();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                buscarProductos();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                buscarProductos();
+            }
+
+        });
+
+        JLabel titulo = new JLabel("📦 GESTIÓN DE PRODUCTOS");
         titulo.setHorizontalAlignment(SwingConstants.CENTER);
         titulo.setFont(new Font("Arial", Font.BOLD, 22));
 
-        panel.add(titulo, BorderLayout.NORTH);
+        JPanel norte = new JPanel(new BorderLayout());
+
+        norte.add(titulo, BorderLayout.NORTH);
+        norte.add(panelSuperior, BorderLayout.SOUTH);
+
+        panel.add(norte, BorderLayout.NORTH);
 
         modelo = new DefaultTableModel();
 
@@ -37,6 +72,23 @@ public class ProductoView extends JFrame {
         modelo.addColumn("Stock");
 
         tabla = new JTable(modelo);
+        tabla.setRowHeight(28);
+
+        tabla.getTableHeader().setFont(
+                new Font("Arial", Font.BOLD, 14)
+        );
+
+        tabla.getTableHeader().setBackground(
+                new Color(33,150,243)
+        );
+
+        tabla.getTableHeader().setForeground(Color.BLACK);
+
+        tabla.setSelectionBackground(
+                new Color(187,222,251)
+        );
+
+        tabla.setGridColor(Color.LIGHT_GRAY);
 
         JScrollPane scroll = new JScrollPane(tabla);
 
@@ -45,6 +97,7 @@ public class ProductoView extends JFrame {
         JPanel botones = new JPanel();
 
         JButton btnNuevo = new JButton("Nuevo");
+
         btnNuevo.addActionListener(e -> {
 
             NuevoProductoView ventana = new NuevoProductoView(this);
@@ -129,6 +182,18 @@ public class ProductoView extends JFrame {
             }
 
         });
+        btnNuevo.setBackground(new Color(76,175,80));
+        btnNuevo.setForeground(Color.WHITE);
+
+        btnEditar.setBackground(new Color(255,193,7));
+        btnEditar.setForeground(Color.BLACK);
+
+        btnEliminar.setBackground(new Color(244,67,54));
+        btnEliminar.setForeground(Color.WHITE);
+
+        btnNuevo.setFocusPainted(false);
+        btnEditar.setFocusPainted(false);
+        btnEliminar.setFocusPainted(false);
 
         botones.add(btnNuevo);
         botones.add(btnEditar);
@@ -164,5 +229,37 @@ public class ProductoView extends JFrame {
         }
 
     }
+    private void buscarProductos() {
+
+        String texto = txtBuscar.getText().trim();
+
+        if (texto.isEmpty()) {
+
+            cargarProductos();
+            return;
+
+        }
+
+        modelo.setRowCount(0);
+
+        ProductoDAOImpl dao = new ProductoDAOImpl();
+
+        for (Producto p : dao.buscar(texto)) {
+
+            modelo.addRow(new Object[]{
+
+                    p.getId(),
+                    p.getCodigo(),
+                    p.getNombre(),
+                    p.getCategoria(),
+                    p.getPrecio(),
+                    p.getStock()
+
+            });
+
+        }
+
+    }
+
 
 }

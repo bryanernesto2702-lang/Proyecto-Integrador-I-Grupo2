@@ -167,5 +167,102 @@ public class ProductoDAOImpl implements ProductoDAO {
         return null;
 
     }
+    public List<Producto> buscar(String texto){
+
+        List<Producto> lista = new ArrayList<>();
+
+        String sql =
+                "SELECT * FROM productos WHERE nombre LIKE ? OR codigo LIKE ?";
+
+        try{
+
+            Connection conexion = ConexionBD.conectar();
+
+            PreparedStatement ps =
+                    conexion.prepareStatement(sql);
+
+            ps.setString(1,"%"+texto+"%");
+            ps.setString(2,"%"+texto+"%");
+
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()){
+
+                Producto p = new Producto();
+
+                p.setId(rs.getInt("id"));
+                p.setCodigo(rs.getString("codigo"));
+                p.setNombre(rs.getString("nombre"));
+                p.setCategoria(rs.getString("categoria"));
+                p.setPrecio(rs.getDouble("precio"));
+                p.setStock(rs.getInt("stock"));
+
+                lista.add(p);
+
+            }
+
+        }catch(Exception e){
+
+            e.printStackTrace();
+
+        }
+
+        return lista;
+
+    }
+    public int contarProductos() {
+
+        String sql = "SELECT COUNT(*) FROM productos";
+
+        try {
+
+            Connection conexion = ConexionBD.conectar();
+
+            PreparedStatement ps = conexion.prepareStatement(sql);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+
+                return rs.getInt(1);
+
+            }
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        }
+
+        return 0;
+
+    }
+    public int contarStockBajo() {
+
+        String sql = "SELECT COUNT(*) FROM productos WHERE stock < 5";
+
+        try {
+
+            Connection conexion = ConexionBD.conectar();
+
+            PreparedStatement ps = conexion.prepareStatement(sql);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+
+                return rs.getInt(1);
+
+            }
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        }
+
+        return 0;
+
+    }
 
 }

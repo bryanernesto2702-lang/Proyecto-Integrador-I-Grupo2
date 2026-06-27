@@ -21,6 +21,7 @@ public class NuevoProductoView extends JDialog {
     // Si tiene datos -> Editar Producto
     private Producto productoEditar = null;
 
+
     public NuevoProductoView(JFrame parent) {
 
         super(parent, "Nuevo Producto", true);
@@ -146,6 +147,7 @@ public class NuevoProductoView extends JDialog {
 
     }
 
+
     public JTextField getTxtCodigo() {
         return txtCodigo;
     }
@@ -169,5 +171,6 @@ public class NuevoProductoView extends JDialog {
     public JButton getBtnGuardar() {
         return btnGuardar;
     }
+
 
 }
