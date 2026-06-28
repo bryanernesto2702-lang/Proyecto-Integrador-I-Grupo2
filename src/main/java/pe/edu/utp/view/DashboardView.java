@@ -48,6 +48,14 @@ public class DashboardView extends JFrame {
 
         JButton btnInventario = new JButton("Inventario");
 
+        btnInventario.addActionListener(e -> {
+
+            InventarioView ventana = new InventarioView();
+
+            ventana.setVisible(true);
+
+        });
+
         JButton btnCompras = new JButton("Compras");
 
         JButton btnVentas = new JButton("Ventas");

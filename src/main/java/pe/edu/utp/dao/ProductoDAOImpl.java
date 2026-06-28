@@ -167,6 +167,11 @@ public class ProductoDAOImpl implements ProductoDAO {
         return null;
 
     }
+    public Producto obtenerPorId(int id){
+
+        return buscarPorId(id);
+
+    }
     public List<Producto> buscar(String texto){
 
         List<Producto> lista = new ArrayList<>();
@@ -262,6 +267,29 @@ public class ProductoDAOImpl implements ProductoDAO {
         }
 
         return 0;
+
+    }
+    public void actualizarStock(int idProducto, int nuevoStock){
+
+        String sql = "UPDATE productos SET stock=? WHERE id=?";
+
+        try{
+
+            Connection conexion = ConexionBD.conectar();
+
+            PreparedStatement ps =
+                    conexion.prepareStatement(sql);
+
+            ps.setInt(1,nuevoStock);
+            ps.setInt(2,idProducto);
+
+            ps.executeUpdate();
+
+        }catch(Exception e){
+
+            e.printStackTrace();
+
+        }
 
     }
 

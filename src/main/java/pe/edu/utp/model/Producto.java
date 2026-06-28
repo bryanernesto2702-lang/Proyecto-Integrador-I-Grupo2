@@ -70,6 +70,12 @@ public class Producto {
     public int getStock() {
         return stock;
     }
+    @Override
+    public String toString() {
+
+        return nombre;
+
+    }
 
     public void setStock(int stock) {
         this.stock = stock;
