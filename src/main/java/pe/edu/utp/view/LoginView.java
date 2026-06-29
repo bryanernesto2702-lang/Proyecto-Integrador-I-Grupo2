@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import pe.edu.utp.config.Sesion;
 
 public class LoginView extends JFrame {
 
@@ -70,7 +71,9 @@ public class LoginView extends JFrame {
 
                 if (u != null) {
 
+                    Sesion.setUsuarioActual(u);
                     JOptionPane.showMessageDialog(
+
                             LoginView.this,
                             "Bienvenido " + u.getNombre()
                     );

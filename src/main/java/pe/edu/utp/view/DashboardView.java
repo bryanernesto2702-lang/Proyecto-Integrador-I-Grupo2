@@ -57,6 +57,13 @@ public class DashboardView extends JFrame {
         });
 
         JButton btnCompras = new JButton("Compras");
+        btnCompras.addActionListener(e -> {
+
+            CompraView ventana = new CompraView();
+
+            ventana.setVisible(true);
+
+        });
 
         JButton btnVentas = new JButton("Ventas");
 

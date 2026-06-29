@@ -8,6 +8,7 @@ import java.awt.*;
 import java.util.List;
 import pe.edu.utp.dao.MovimientoInventarioDAOImpl;
 import pe.edu.utp.model.MovimientoInventario;
+import pe.edu.utp.config.Sesion;
 
 public class InventarioView extends JFrame {
 
@@ -133,7 +134,9 @@ public class InventarioView extends JFrame {
                             : "SALIDA"
             );
 
-            movimiento.setUsuarioId(1);
+            movimiento.setUsuarioId(
+                    Sesion.getUsuarioActual().getId()
+            );
 
             movimientoDAO.registrar(movimiento);
 
