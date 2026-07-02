@@ -170,14 +170,25 @@ public class ProductoView extends JFrame {
 
                 ProductoDAOImpl dao = new ProductoDAOImpl();
 
-                dao.eliminar(id);
-
-                cargarProductos();
-
-                JOptionPane.showMessageDialog(
+                int opcion = JOptionPane.showConfirmDialog(
                         this,
-                        "Producto eliminado correctamente."
+                        "¿Está seguro de eliminar este producto?",
+                        "Confirmar eliminación",
+                        JOptionPane.YES_NO_OPTION
                 );
+
+                if (opcion == JOptionPane.YES_OPTION) {
+
+                    dao.eliminar(id);
+
+                    JOptionPane.showMessageDialog(
+                            this,
+                            "Producto eliminado correctamente."
+                    );
+
+                    cargarProductos();
+
+                }
 
             }
 
