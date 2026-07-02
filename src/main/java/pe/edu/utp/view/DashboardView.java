@@ -6,7 +6,8 @@ import pe.edu.utp.model.Usuario;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import pe.edu.utp.view.VentaView;
+
+import pe.edu.utp.dao.VentaDAOImpl;
 
 public class DashboardView extends JFrame {
 
@@ -41,6 +42,13 @@ public class DashboardView extends JFrame {
         lblRol.setFont(new Font("Arial",Font.PLAIN,13));
 
         JButton btnInicio = new JButton("Inicio");
+        btnInicio.addActionListener(e -> {
+
+            dispose();
+
+            new DashboardView(usuario).setVisible(true);
+
+        });
 
         JButton btnProductos = new JButton("Productos");
         btnProductos.addActionListener(e -> {
@@ -139,9 +147,20 @@ public class DashboardView extends JFrame {
 
         centro.add(crearTarjeta("📦 Productos", String.valueOf(totalProductos)));
         centro.add(crearTarjeta("⚠ Stock Bajo", String.valueOf(stockBajo)));
-        centro.add(crearTarjeta("💰 Ventas Hoy", "0"));
-        centro.add(crearTarjeta("👤 Usuario",
-                usuario.getRol().equals("Administrador") ? "Administrador" : "Empleado"));
+        VentaDAOImpl ventaDAO = new VentaDAOImpl();
+
+        double ventasHoy = ventaDAO.totalVentasHoy();
+
+        centro.add(
+                crearTarjeta(
+                        "💰 Ventas Hoy",
+                        String.format("S/. %.2f", ventasHoy)
+                )
+        );
+        centro.add(crearTarjeta(
+                "👤 Usuario",
+                usuario.getNombre()
+        ));
 
         principal.add(menu,BorderLayout.WEST);
         principal.add(centro,BorderLayout.CENTER);

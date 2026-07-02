@@ -21,10 +21,19 @@ public class ProductoServiceTest {
                 new ProductoServiceImpl(daoMock);
 
         Producto producto =
-                new Producto("CAR-122", "Tela Velvet Azul", "Tapicería");
+                new Producto(
+                        0,
+                        "CAR-122",
+                        "Tela Velvet Azul",
+                        "Tapicería",
+                        25.50,
+                        100
+                );
 
         service.registrarProducto(producto);
 
         verify(daoMock).guardar(producto);
+
     }
+
 }

@@ -106,5 +106,37 @@ public class VentaDAOImpl implements VentaDAO {
         return lista;
 
     }
+    public double totalVentasHoy() {
+
+        String sql = """
+            SELECT IFNULL(SUM(precio * cantidad),0)
+            FROM ventas
+            WHERE DATE(fecha)=CURDATE()
+            """;
+
+        try {
+
+            Connection conexion = ConexionBD.conectar();
+
+            PreparedStatement ps =
+                    conexion.prepareStatement(sql);
+
+            ResultSet rs = ps.executeQuery();
+
+            if(rs.next()){
+
+                return rs.getDouble(1);
+
+            }
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        }
+
+        return 0;
+
+    }
 
 }
