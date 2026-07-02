@@ -6,6 +6,7 @@ import pe.edu.utp.model.Usuario;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import pe.edu.utp.view.VentaView;
 
 public class DashboardView extends JFrame {
 
@@ -66,6 +67,13 @@ public class DashboardView extends JFrame {
         });
 
         JButton btnVentas = new JButton("Ventas");
+        btnVentas.addActionListener(e -> {
+
+            VentaView ventana = new VentaView();
+
+            ventana.setVisible(true);
+
+        });
 
         JButton btnUsuarios = new JButton("Usuarios");
         btnUsuarios.addActionListener(e -> {
